@@ -24,17 +24,20 @@ services:
     depends_on:
       - db
       
-  # app:
-  #   container_name: app
-  #   build: .
-  #   command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
-  #   volumes:
-  #     - .:/app
-  #   ports:
-  #     - 8000:8000
-  #   depends_on:
-  #     - db
-  #   restart: always
+  app:
+    container_name: app
+    # using dot means the directory
+    build: .
+    command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    # command: bash -c "uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - .:/aftermath 
+    ports:
+      - 8000:8000
+      # depends on the database
+    depends_on:
+      - db
+    restart: always
 
 
 
